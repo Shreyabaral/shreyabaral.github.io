@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+            font-family: arial;
+            overflow: scroll;
+            overflow-y: hidden;
+        }
+
+        .title {
+            color: grey;
+            font-size: 18px;
+        }
+
+        button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+            font-size: 18px;
+        }
+
+        a {
+            text-decoration: none;
+            font-size: 22px;
+            color: black;
+        }
+
+        button:hover, a:hover {
+            opacity: 0.7;
+        }
+
+        #table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+
+        }
+        th, td {
+            padding: 5px;
+            text-align: left;
+
+
+        }
+    </style>
+</head>
+<body>
+
+<h2 style="text-align:center">User Profile</h2>
+
+<div class="card">
+    <img id="image" style="width:100%">
+    <h1 id = "name"> </h1>
+    <p id="bio"> </p>
+    <p id="Location"></p>
+    <div style="margin: 24px 0;">
+
+        <table id="table">
+            <thead><h1> My project list </h1>
+            <tr class="table-info">
+                <th scope="col">S.NO</th>
+                <th scope="col">Name</th>
+                <th scope="col">URL</th>
+
+            </tr>
+            </thead>
+            <tr class="tableRow">
+        </table>
+        <a href="#"><i class="fa fa-dribbble"></i></a>
+        <a href="https://twitter.com/intent/tweet?button_hashtag=shrbaral&ref_src=twsrc%5Etfw" class="fa fa-twitter" data-show-count="false"></a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></a>
+        <a href="https://api.github.com/users/shreyabaral/repo/topics></i></a>
+        <a href="#"><i class="fa fa-facebook"></i></a>
+    </div>
+    <p><button>Contact</button></p>
+</div>
+
+<script>
+   fetch("https://api.github.com/users/shreyabaral")
+        .then (response =>response.json())
+        .then(function (data) {
+            console.log(data)
+            document.getElementById("image").src=data['avatar_url']
+            document.getElementById("name").textContent=data['name']
+            document.getElementById("bio").textContent=data['bio']
+            document.getElementById("Location").textContent=data['location']
+
+        })
+   fetch("https://api.github.com/users/shreyabaral/repos")
+       .then (response =>response.json())
+       .then(function (data) {
+           console.log(data)
+
+
+           for ( var i in data) {
+               console.log('data',i);
+               var z=data[i]['name']
+               var g= data[i][`svn_url`]
+               var row = document.createElement("tr");
+
+               var node1 = document.createElement("td");
+               var textnode1 = document.createTextNode(i);
+               node1.appendChild(textnode1);
+
+               var node2 = document.createElement("td");
+               var textnode2 = document.createTextNode(z);
+               node2.appendChild(textnode2);
+
+               var node3 = document.createElement("td");
+               var textnode3 = document.createTextNode(g);
+               node3.appendChild(textnode3);
+
+               row.appendChild(node1);
+               row.appendChild(node2)
+               row.appendChild(node3)
+               document.getElementById("table").appendChild(row);
+           }}
+        )
+
+
+</script>
+
+</body>
+</html>
